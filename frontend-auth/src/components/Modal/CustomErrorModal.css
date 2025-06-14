@@ -1,0 +1,133 @@
+.custom-error-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+  backdrop-filter: blur(4px);
+}
+
+.custom-error-modal {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  overflow: hidden;
+  position: relative;
+  border-top: 4px solid #D32F2F;
+}
+
+.error-modal-content {
+  padding: 32px;
+  position: relative;
+}
+
+.error-modal-icon-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.error-modal-icon {
+  width: 60px;
+  height: 60px;
+  color: #D32F2F;
+  animation: pulse 0.6s ease;
+}
+
+.error-modal-text {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-modal-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #C62828;
+  margin-bottom: 12px;
+}
+
+.error-modal-message {
+  font-size: 16px;
+  color: #424242;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.error-modal-close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #f5f5f5;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.error-modal-close-button svg {
+  width: 20px;
+  height: 20px;
+  color: #757575;
+}
+
+.error-modal-close-button:hover {
+  background: #e0e0e0;
+}
+
+.error-modal-close-button:hover svg {
+  color: #424242;
+}
+
+.error-modal-progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background-color: #FFEBEE;
+}
+
+.error-modal-progress-bar::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: #D32F2F;
+  animation: progressBar 3s linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes progressBar {
+  0% { width: 100%; }
+  100% { width: 0%; }
+}

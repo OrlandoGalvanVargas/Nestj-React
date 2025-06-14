@@ -1,0 +1,652 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  padding: 15px 0;
+  color: #fff;
+}
+
+.navbar-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-logo {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.navbar-links ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.navbar-links li {
+  position: relative;
+}
+
+.navbar-links a,
+.navbar-user,
+.logout-btn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-size: 16px;
+}
+
+.navbar-user {
+  font-size: 16px;
+}
+
+.navbar-links a::after,
+.logout-btn::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover::after,
+.logout-btn:hover::after {
+  width: 100%;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar-links ul {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+
+/* ... (mantén todos los estilos existentes arriba) ... */
+
+/* Dropdown Styles - Enhanced */
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-toggle {
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle::after {
+  content: '▼';
+  font-size: 10px;
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-toggle {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown:hover .dropdown-toggle::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 220px;
+  padding: 10px 0;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 20px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid white;
+}
+
+.dropdown-menu li {
+  padding: 0;
+  margin: 5px 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #4e54c8;
+  display: block;
+  padding: 12px 15px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.dropdown-menu li a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, #8f94fb, #4e54c8);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-menu li:hover {
+  background: rgba(79, 84, 200, 0.05);
+}
+
+.dropdown-menu li:hover a {
+  color: #4e54c8;
+  padding-left: 20px;
+}
+
+.dropdown-menu li:hover a::before {
+  transform: scaleY(1);
+}
+
+/* Animation for dropdown items */
+.dropdown-menu li {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.4s ease;
+}
+
+.dropdown:hover .dropdown-menu li {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.dropdown:hover .dropdown-menu li:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+/* Add more nth-child rules if you have more menu items */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dropdown-toggle {
+    padding: 6px 12px;
+  }
+  
+  .dropdown-menu {
+    min-width: 180px;
+    left: -50px;
+  }
+  
+  .dropdown-menu::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+/* ... (mantén todos los estilos existentes arriba) ... */
+
+/* Enhanced Login/Register Links */
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  padding: 8px 15px;
+  border-radius: 30px;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.navbar-links a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.navbar-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-links a:hover::before {
+  transform: translateX(0);
+}
+
+/* Icon styles */
+.navbar-links a span {
+  font-size: 14px;
+}
+
+/* Specific styles for Login/Register */
+.navbar-links a[href="/login"] {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.navbar-links a[href="/register"] {
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.15));
+}
+
+/* Remove the underline effect (replaced with new design) */
+.navbar-links a::after,
+.logout-btn::after {
+  display: none;
+}
+
+/* Update logout button to match new style */
+.logout-btn {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  padding: 8px 15px !important;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar-links a,
+  .logout-btn {
+    padding: 6px 12px !important;
+    font-size: 14px;
+  }
+  
+  .navbar-links ul {
+    gap: 15px;
+  }
+}
+/* Logo Styles */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.store-logo {
+  width: 36px;
+  height: 36px;
+  background: white;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.store-logo::before,
+.store-logo::after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  border-radius: 4px;
+}
+
+/* Bolsa de compras */
+.store-logo::before {
+  width: 18px;
+  height: 22px;
+  bottom: 6px;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    80% 10%,
+    80% 60%,
+    60% 80%,
+    40% 80%,
+    20% 60%,
+    20% 10%,
+    0 0
+  );
+}
+
+/* Asa de la bolsa */
+.store-logo::after {
+  width: 8px;
+  height: 4px;
+  top: 6px;
+  left: 14px;
+  border-radius: 10px 10px 0 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .store-logo {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .store-logo::before {
+    width: 15px;
+    height: 18px;
+    bottom: 5px;
+  }
+  
+  .store-logo::after {
+    width: 6px;
+    height: 3px;
+    top: 5px;
+    left: 12px;
+  }
+}
+
+/* Custom Icons */
+.user-icon,
+.admin-icon,
+.logout-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* User Icon */
+.user-icon::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: white;
+  top: 0;
+  left: 5px;
+}
+
+.user-icon::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 8px;
+  border-radius: 8px 8px 0 0;
+  border: 2px solid white;
+  border-bottom: none;
+  bottom: 0;
+  left: 2px;
+}
+
+/* Admin Icon (Gear) */
+.admin-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.admin-icon::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.admin-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, transparent 45%, white 45%, white 55%, transparent 55%),
+    linear-gradient(-45deg, transparent 45%, white 45%, white 55%, transparent 55%),
+    linear-gradient(0deg, transparent 45%, white 45%, white 55%, transparent 55%),
+    linear-gradient(90deg, transparent 45%, white 45%, white 55%, transparent 55%);
+  top: 0;
+  left: 0;
+}
+
+/* Logout Icon (Door) */
+.logout-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.logout-icon::before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  border: 2px solid white;
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  top: 1px;
+  left: 0;
+}
+
+.logout-icon::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 6px;
+  border: 2px solid white;
+  border-left: none;
+  border-radius: 0 2px 2px 0;
+  top: 5px;
+  left: 10px;
+}
+
+/* Adjustments for dropdown icon */
+.dropdown-toggle .admin-icon {
+  margin-right: 8px;
+}
+
+/* Adjustments for logout button */
+.logout-btn .logout-icon {
+  margin-right: 6px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .user-icon,
+  .admin-icon,
+  .logout-icon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .user-icon::before {
+    width: 8px;
+    height: 8px;
+    left: 4px;
+  }
+  
+  .user-icon::after {
+    width: 12px;
+    height: 6px;
+    left: 2px;
+  }
+  
+  .logout-icon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .logout-icon::before {
+    width: 8px;
+    height: 12px;
+  }
+  
+  .logout-icon::after {
+    width: 3px;
+    height: 5px;
+    left: 8px;
+    top: 4px;
+  }
+}
+/* Custom Icons for Login and Register */
+.login-icon,
+.register-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  position: relative;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Login Icon (Key) */
+.login-icon::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  border-radius: 3px;
+  background: white;
+  top: 4px;
+  left: 0;
+}
+
+.login-icon::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border: 2px solid white;
+  border-radius: 4px 4px 0 4px;
+  top: 0;
+  left: 5px;
+}
+
+/* Register Icon (Pencil and Document) */
+.register-icon::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 14px;
+  border: 2px solid white;
+  border-radius: 2px;
+  top: 0;
+  left: 0;
+}
+
+.register-icon::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background: white;
+  top: 3px;
+  left: 2px;
+  box-shadow: 
+    0 3px 0 white,
+    0 6px 0 white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-icon,
+  .register-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+  
+  .login-icon::before {
+    width: 7px;
+    height: 5px;
+    top: 3px;
+  }
+  
+  .login-icon::after {
+    width: 5px;
+    height: 8px;
+    left: 4px;
+  }
+  
+  .register-icon::before {
+    width: 10px;
+    height: 12px;
+  }
+  
+  .register-icon::after {
+    width: 6px;
+    top: 2px;
+    left: 2px;
+    box-shadow: 
+      0 2.5px 0 white,
+      0 5px 0 white;
+  }
+}
