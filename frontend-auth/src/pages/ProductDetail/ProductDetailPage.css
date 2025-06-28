@@ -426,3 +426,110 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Estilos para la sección de cantidad */
+.pd-quantity-section {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pd-quantity-label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.pd-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.pd-quantity-btn {
+  background: #f8f9fa;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-quantity-btn:hover:not(:disabled) {
+  background: #e9ecef;
+}
+
+.pd-quantity-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pd-quantity-input {
+  border: none;
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 16px;
+  width: 60px;
+  height: 40px;
+  background: white;
+  outline: none;
+}
+
+.pd-quantity-input:disabled {
+  background: #f8f9fa;
+  color: #6c757d;
+}
+
+/* Actualizar el estilo del botón de comprar */
+.pd-buy-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  min-width: 180px;
+}
+
+.pd-buy-button:hover:not(.pd-disabled) {
+  background: #0056b3;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.pd-buy-button.pd-disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pd-quantity-controls {
+    width: 100%;
+    max-width: 150px;
+  }
+  
+  .pd-buy-button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

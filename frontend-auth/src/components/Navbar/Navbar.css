@@ -650,3 +650,207 @@ body {
       0 5px 0 white;
   }
 }
+/* Estilos para el carrito de compras */
+.cart-container {
+  position: relative;
+}
+
+.cart-button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 30px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: visible;
+}
+
+.cart-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Ícono del carrito */
+.cart-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.cart-icon::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 12px;
+  border: 2px solid white;
+  border-radius: 0 0 4px 4px;
+  top: 4px;
+  left: 3px;
+}
+
+.cart-icon::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 4px;
+  border: 2px solid white;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  top: 0;
+  left: 7px;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Animación para cuando aparece el badge */
+@keyframes cartBadgeAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cartSpin {
+  0% { transform: translateY(-50%) rotate(0deg); }
+  100% { transform: translateY(-50%) rotate(360deg); }
+}
+
+/* Efecto de pulso cuando se actualiza el carrito */
+.cart-button.cart-updated {
+  animation: cartPulse 0.6s ease-out;
+}
+
+@keyframes cartPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cart-button {
+    padding: 6px 12px;
+    font-size: 14px;
+    gap: 6px;
+  }
+  
+  .cart-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .cart-icon::before {
+    width: 12px;
+    height: 10px;
+    top: 3px;
+    left: 3px;
+  }
+  
+  .cart-icon::after {
+    width: 5px;
+    height: 3px;
+    top: 0;
+    left: 6px;
+  }
+  
+  .cart-badge {
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    top: -6px;
+    right: -6px;
+  }
+}
+
+/* Estilos adicionales para mejor UX */
+.cart-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Agrega esto para mejor visibilidad */
+.cart-button {
+  padding-right: 30px; /* Espacio para el badge */
+}
+
+.cart-container {
+  margin-right: 15px; /* Espacio entre el carrito y otros elementos */
+}
+
+/* Spinner de carga para el carrito */
+.cart-loading-spinner {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: cart-spinner-rotate 1s linear infinite;
+  z-index: 10;
+}
+
+/* Animación de rotación para el spinner */
+@keyframes cart-spinner-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ajustes responsive para el spinner */
+@media (max-width: 768px) {
+  .cart-loading-spinner {
+    width: 20px;
+    height: 20px;
+    top: -6px;
+    right: -6px;
+    border-width: 2px;
+  }
+}
+
+/* Estilo adicional para mejorar la visibilidad del spinner */
+.cart-button:disabled .cart-loading-spinner {
+  border-top-color: rgba(255, 255, 255, 0.8);
+}

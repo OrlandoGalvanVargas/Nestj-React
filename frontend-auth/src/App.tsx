@@ -11,6 +11,7 @@ import UpdateProduct from './pages/UpdateProduct/UpdateProduct'; // Asegúrate d
 import Coupon from './pages/Coupon/Coupon';
 import AddCoupon from './pages/AddCoupon/AddCoupon';
 import UpdateCoupon from './pages/UpdateCoupon/UpdateCoupon';
+import ShoppingCartPage from './pages/ShoppingCart/ShoppingCartPage';
 
 const App: React.FC = () => {
   return (
@@ -69,6 +70,9 @@ const App: React.FC = () => {
             </ProtectedRoute>
           } 
         />
+
+<Route path="/cart" element={<ShoppingCartPage />} />
+
       </Routes>
     </Router>
   );

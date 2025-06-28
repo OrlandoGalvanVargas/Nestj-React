@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/auth'; // Asegúrate de que coincida con tu backend
+const API_URL = 'http://localhost:3001/auth'; // Asegúrate de que coincida con tu backend
 
 export const login = async (email: string, password: string) => {
   try {

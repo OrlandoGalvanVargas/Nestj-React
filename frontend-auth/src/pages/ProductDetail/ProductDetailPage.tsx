@@ -8,6 +8,7 @@ import CustomDeleteModal from '../../components/Modal/CustomDeleteModal';
 import CustomSuccessModal from '../../components/Modal/CustomSuccessModal';
 import CustomErrorModal from '../../components/Modal/CustomErrorModal';
 import './ProductDetailPage.css';
+import { cartUpsert } from '../../api/shopping-cart';
 
 interface Product {
   productId: number;
@@ -41,6 +42,10 @@ const ProductDetailPage: React.FC = () => {
   const user = getUser();
   const isLoggedIn = Boolean(user);
   const isAdmin = user?.roles?.includes('ADMIN');
+const [quantity, setQuantity] = useState(1);
+const [isAddingToCart, setIsAddingToCart] = useState(false);
+const [showCartSuccessModal, setShowCartSuccessModal] = useState(false);
+const [cartSuccessMessage, setCartSuccessMessage] = useState('');
 
 useEffect(() => {
     const fetchProduct = async () => {
@@ -61,6 +66,52 @@ useEffect(() => {
 
     fetchProduct();
   }, [id]);
+
+  // useEffect adicional para manejar el modal de éxito del carrito
+useEffect(() => {
+  if (showCartSuccessModal) {
+    const timer = setTimeout(() => {
+      setShowCartSuccessModal(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
+}, [showCartSuccessModal]);
+
+// Función para manejar el cambio de cantidad
+const handleQuantityChange = (newQuantity: number) => {
+  if (newQuantity >= 1 && (product?.stock === undefined || newQuantity <= product.stock)) {
+    setQuantity(newQuantity);
+  }
+};
+
+// Agrega esta función al final de tu handleAddToCart en ProductDetailPage.tsx
+
+const handleAddToCart = async () => {
+  if (!user || !product) return;
+  
+  setIsAddingToCart(true);
+  try {
+    const response = await cartUpsert(user.id, product.productId, quantity);
+    
+    if (response.isSuccess) {
+      setCartSuccessMessage(`${quantity} ${quantity === 1 ? 'producto agregado' : 'productos agregados'} al carrito`);
+      setShowCartSuccessModal(true);
+      
+      // ✨ NUEVA LÍNEA: Actualizar el contador del carrito en el navbar
+      if ((window as any).refreshNavbarCart) {
+        (window as any).refreshNavbarCart();
+      }
+    } else {
+      setErrorMessage(response.message || 'Error al agregar al carrito');
+      setShowErrorModal(true);
+    }
+  } catch (error) {
+    setErrorMessage(error instanceof Error ? error.message : 'Error al agregar al carrito');
+    setShowErrorModal(true);
+  } finally {
+    setIsAddingToCart(false);
+  }
+};
 
   useEffect(() => {
     if (showSuccessModal) {
@@ -217,35 +268,75 @@ useEffect(() => {
               </div>
             )}
 
-            {/* Actions */}
-            <div className="pd-actions">
-              <button 
-                className={`pd-buy-button ${!isLoggedIn ? 'pd-disabled' : ''}`}
-                disabled={!isLoggedIn}
-                title={!isLoggedIn ? "Debes iniciar sesión para comprar" : ""}
-              >
-                🛒 Comprar ahora
-              </button>
-              
-              {isAdmin && (
-                <div className="pd-admin-actions">
-                  <button 
-                    className="pd-edit-button"
-                    onClick={() => navigate(`/update-product/${product.productId}`)}
-                    title="Editar producto"
-                  >
-                    ✏️ Editar
-                  </button>
-                  <button
-                    className="pd-delete-button"
-                    onClick={() => handleDeleteClick(product)}
-                    title="Eliminar producto"
-                  >
-                    🗑️ Eliminar
-                  </button>
-                </div>
-              )}
-            </div>
+<div className="pd-actions">
+  {/* Selector de cantidad */}
+  <div className="pd-quantity-section">
+    <label htmlFor="quantity" className="pd-quantity-label">Cantidad:</label>
+    <div className="pd-quantity-controls">
+      <button 
+        className="pd-quantity-btn pd-quantity-decrease"
+        onClick={() => handleQuantityChange(quantity - 1)}
+        disabled={quantity <= 1}
+        type="button"
+      >
+        -
+      </button>
+      <input
+        id="quantity"
+        type="number"
+        className="pd-quantity-input"
+        value={quantity}
+        onChange={(e) => handleQuantityChange(parseInt(e.target.value) || 1)}
+        min="1"
+        max={product?.stock || 999}
+        disabled={!isLoggedIn}
+      />
+      <button 
+        className="pd-quantity-btn pd-quantity-increase"
+        onClick={() => handleQuantityChange(quantity + 1)}
+        disabled={!isLoggedIn || (product?.stock !== undefined && quantity >= product.stock)}
+        type="button"
+      >
+        +
+      </button>
+    </div>
+  </div>
+
+  {/* Botón de comprar */}
+  <button 
+    className={`pd-buy-button ${!isLoggedIn || isAddingToCart ? 'pd-disabled' : ''}`}
+    disabled={!isLoggedIn || isAddingToCart || (product?.stock !== undefined && product.stock <= 0)}
+    onClick={handleAddToCart}
+    title={
+      !isLoggedIn 
+        ? "Debes iniciar sesión para comprar" 
+        : (product?.stock !== undefined && product.stock <= 0)
+        ? "Producto agotado"
+        : ""
+    }
+  >
+    {isAddingToCart ? '🔄 Agregando...' : '🛒 Agregar al carrito'}
+  </button>
+  
+  {isAdmin && (
+    <div className="pd-admin-actions">
+      <button 
+        className="pd-edit-button"
+        onClick={() => navigate(`/update-product/${product.productId}`)}
+        title="Editar producto"
+      >
+        ✏️ Editar
+      </button>
+      <button
+        className="pd-delete-button"
+        onClick={() => handleDeleteClick(product)}
+        title="Eliminar producto"
+      >
+        🗑️ Eliminar
+      </button>
+    </div>
+  )}
+</div>
           </div>
         </div>
 
@@ -294,7 +385,13 @@ useEffect(() => {
           onClose={handleSuccessClose}
         />
       )}
-
+{showCartSuccessModal && (
+  <CustomSuccessModal
+    title="Producto Agregado"
+    message={cartSuccessMessage}
+    onClose={() => setShowCartSuccessModal(false)}
+  />
+)}
       {showErrorModal && (
         <CustomErrorModal
           title="Error al Eliminar"
